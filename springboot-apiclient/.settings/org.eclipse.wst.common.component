@@ -2,7 +2,7 @@
     <wb-module deploy-name="wah-apiclient">
         <wb-resource deploy-path="/" source-path="/src/main/java"/>
         <wb-resource deploy-path="/" source-path="/src/main/resources"/>
-        <dependent-module archiveName="wah-infrastructure.jar" deploy-path="/" handle="module:/resource/wah-infrastructure/wah-infrastructure">
+        <dependent-module archiveName="wah-infrastructure.jar" deploy-path="/" handle="module:/resource/springboot-infrastructure/springboot-infrastructure">
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>

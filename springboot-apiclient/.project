@@ -3,7 +3,7 @@
 	<name>wah-apiclient</name>
 	<comment></comment>
 	<projects>
-		<project>wah-infrastructure</project>
+		<project>springboot-infrastructure</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

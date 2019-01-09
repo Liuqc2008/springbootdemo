@@ -90,6 +90,10 @@
 			<groupId>com.lqc</groupId>
 			<artifactId>springboot-infrastructure</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.lqc</groupId>
+			<artifactId>springboot-apiclient</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
