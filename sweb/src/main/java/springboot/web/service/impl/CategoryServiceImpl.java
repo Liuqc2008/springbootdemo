@@ -15,6 +15,10 @@ public class CategoryServiceImpl  implements CategoryService{
 	@Autowired
 	CategoryMapper categoryMapper;
 	
+	public List<Map<String,Object>> GetCategoryList(Map<String, Object> map){
+		return categoryMapper.GetCategoryList(map);
+	}
+	
 	public List<Category> findAll(){
 		return categoryMapper.findAll();
 	}

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="springboot.web.mapper.AccountMapper">
+
+	<select id="GetAccountRoleList" parameterType="Map" resultType="java.util.HashMap">
+		select
+		<choose>
+			<when test="count !=null and count !='' ">
+				count(account.id) as totalNum
+			</when>
+			<otherwise>
+				account.id,
+				account.`name`,
+				account.`password`,
+				date_format(account.createDate, '%Y-%c-%d %H:%i:%s' ) as createDate,
+				role.id as roleid,
+				role.`name` as rolename,
+				role.`desc` as roledesc,
+				role.createDate as rolecreateDate
+			</otherwise>
+		</choose>
+		
+		from account
+		join accountrole on accountid = account.id
+		join role on role.id = accountrole.roleid
+		<where>
+			<if test="name !=null and name !='' ">
+				and account.name like CONCAT('%',#{name},'%')
+			</if>
+			<if test="startTime !=null and startTime !='' ">
+				and account.createDate <![CDATA[ >= ]]> #{startTime}
+			</if>
+			<if test="endTime !=null and endTime !='' ">
+				and account.createDate <![CDATA[ <= ]]> #{endTime}
+			</if>
+			<if test="rolename !=null and rolename !='' ">
+				and role.name = #{rolename}
+			</if>
+		</where>
+		
+		<if test="page !=null and page !='' ">
+			limit ${(page -1) * limit}, ${limit}
+		</if>
+	</select>
+
+	<select id="list" parameterType="Map" resultType="Account">
+		select id, name, password, state, createDate
+		from account
+		<where>
+			<if test="name !=null and name !='' ">
+				and name like CONCAT('%',#{name},'%')
+			</if>
+			<if test="startTime !=null and startTime !='' ">
+				and createDate <![CDATA[ >= ]]>
+				#{startTime}
+			</if>
+			<if test="endTime !=null and endTime !='' ">
+				and createDate <![CDATA[ <= ]]>
+				#{endTime}
+			</if>
+		</where>
+		order by createDate desc
+		<if test="page !=null and page !='' ">
+			limit ${(page -1) * limit}, ${limit}
+		</if>
+	</select>
+
+	<select id="count" parameterType="Map" resultType="java.lang.Integer">
+		select count(id) from account
+		<where>
+			<if test="name !=null and name !='' ">
+				and name like CONCAT('%',#{name},'%')
+			</if>
+			<if test="password !=null and password !='' ">
+				and password = #{password}
+			</if>
+			<if test="startTime !=null and startTime !='' ">
+				and createDate <![CDATA[ >= ]]> #{startTime}
+			</if>
+			<if test="endTime !=null and endTime !='' ">
+				and createDate <![CDATA[ <= ]]> #{endTime}
+			</if>
+		</where>
+	</select>
+
+	<select id="get" parameterType="_int" resultType="Account">
+		select * from account where id= #{id}
+	</select>
+
+	<insert id="add" keyColumn="id" keyProperty="id" parameterType="Account" useGeneratedKeys="true">
+		insert into account(name, password, state, createDate)
+			values(#{name, jdbcType=VARCHAR}, #{password, jdbcType=VARCHAR},
+				   #{state, jdbcType=TINYINT}, #{createDate, jdbcType=TIMESTAMP})
+	</insert>
+
+	<update id="update" parameterType="Account">
+		update account
+		<set>
+			<if test="name != null">
+				name = #{name, jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				password = #{password, jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				state = #{state, jdbcType=TINYINT},
+			</if>
+			<if test="createDate != null">
+				createDate = #{createDate, jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from account where id = #{id,jdbcType=INTEGER}
+	</delete>
+</mapper>

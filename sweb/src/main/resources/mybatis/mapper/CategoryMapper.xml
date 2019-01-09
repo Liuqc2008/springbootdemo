@@ -3,6 +3,29 @@
 
 <mapper namespace="springboot.web.mapper.CategoryMapper">
 
+	<select id="GetCategoryList" parameterType="Map" resultType="java.util.HashMap">
+		select
+		<choose>
+			<when test="count !=null and count !='' ">
+				count(c.id) as totalNum
+			</when>
+			<otherwise>
+				c.id,
+				c.name
+			</otherwise>
+		</choose>
+		from category_ c
+		<where>
+			<if test="name !=null and name !='' ">
+				and c.name like CONCAT('%',#{name},'%')
+			</if>
+		</where>
+		
+		<if test="page !=null and page !='' ">
+			limit ${(page -1) * limit}, ${limit}
+		</if>
+	</select>
+
 	<select id="findAll" resultType="java.util.HashMap">
 	    select * from category_
 	</select>
