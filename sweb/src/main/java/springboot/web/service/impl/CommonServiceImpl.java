@@ -34,6 +34,7 @@ public class CommonServiceImpl implements CommonService {
 		Object bean = ApplicationContextProvider.getBean(serviceName);
 		List<Map<String,Object>> result = (List<Map<String, Object>>) method.invoke(bean, map);	
 		
+
 		return result;
 	}
 	
