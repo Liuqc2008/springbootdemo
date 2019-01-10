@@ -67,12 +67,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     }
 
     /*
-	 * 配置静态资源路径
+	 * 静态资源路径
 	 * */
 	@Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        //registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
-    	
+        registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
         super.addResourceHandlers(registry);
     }
     
