@@ -136,7 +136,6 @@
 			<if test="password != null">
 				password = #{password, jdbcType=VARCHAR},
 			</if>
-
 			<if test="createDate != null">
 				createDate = #{createDate, jdbcType=TIMESTAMP},
 			</if>
