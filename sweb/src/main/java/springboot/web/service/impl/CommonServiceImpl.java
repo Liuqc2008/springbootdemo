@@ -42,6 +42,7 @@ public class CommonServiceImpl implements CommonService {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("GetCategoryList", "CategoryService");
 		map.put("GetAccountRoleList", "AccountService");
+		map.put("GetAccountList", "AccountService");
 		
 		return map;
 	}

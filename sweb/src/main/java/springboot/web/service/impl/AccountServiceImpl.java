@@ -22,6 +22,10 @@ public class AccountServiceImpl implements AccountService {
 		return accountMapper.GetAccountRoleList(map);
 	}
 	
+	public List<Map<String, Object>> GetAccountList(Map<String, Object> map){
+		return accountMapper.GetAccountList(map);
+	}
+	
 	public List<Account> list(Map<String, Object> map) {
 		return accountMapper.list(map);
 	}

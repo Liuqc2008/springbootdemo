@@ -43,7 +43,40 @@
 			limit ${(page -1) * limit}, ${limit}
 		</if>
 	</select>
-
+	
+	<select id="GetAccountList" parameterType="Map" resultType="java.util.HashMap">
+		select
+		<choose>
+			<when test="count !=null and count !='' ">
+				count(account.id) as totalNum
+			</when>
+			<otherwise>
+				account.id,
+				account.`name`,
+				account.`password`,
+				date_format(account.createDate, '%Y-%c-%d %H:%i:%s' ) as createDate
+			</otherwise>
+		</choose>
+		from account
+		<where>
+			<if test="name !=null and name !='' ">
+				and account.name like CONCAT('%',#{name},'%')
+			</if>
+			<if test="password !=null and password !='' ">
+				and account.password like CONCAT('%',#{password},'%')
+			</if>
+			<if test="startTime !=null and startTime !='' ">
+				and account.createDate <![CDATA[ >= ]]> #{startTime}
+			</if>
+			<if test="endTime !=null and endTime !='' ">
+				and account.createDate <![CDATA[ <= ]]> #{endTime}
+			</if>
+		</where>
+		<if test="page !=null and page !='' ">
+			limit ${(page -1) * limit}, ${limit}
+		</if>
+	</select>
+	
 	<select id="list" parameterType="Map" resultType="Account">
 		select id, name, password, state, createDate
 		from account
@@ -89,9 +122,9 @@
 	</select>
 
 	<insert id="add" keyColumn="id" keyProperty="id" parameterType="Account" useGeneratedKeys="true">
-		insert into account(name, password, state, createDate)
+		insert into account(name, password, createDate)
 			values(#{name, jdbcType=VARCHAR}, #{password, jdbcType=VARCHAR},
-				   #{state, jdbcType=TINYINT}, #{createDate, jdbcType=TIMESTAMP})
+				    #{createDate, jdbcType=TIMESTAMP})
 	</insert>
 
 	<update id="update" parameterType="Account">
@@ -103,9 +136,7 @@
 			<if test="password != null">
 				password = #{password, jdbcType=VARCHAR},
 			</if>
-			<if test="state != null">
-				state = #{state, jdbcType=TINYINT},
-			</if>
+
 			<if test="createDate != null">
 				createDate = #{createDate, jdbcType=TIMESTAMP},
 			</if>

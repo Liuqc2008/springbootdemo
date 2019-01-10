@@ -9,6 +9,8 @@ public interface AccountService {
 	
 	public List<Map<String, Object>> GetAccountRoleList(Map<String, Object> map);
 
+	public List<Map<String, Object>> GetAccountList(Map<String, Object> map);
+	
 	public List<Account> list(Map<String, Object> map);
 
 	public int count(Map<String, Object> map);
