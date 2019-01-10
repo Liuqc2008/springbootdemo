@@ -1,19 +1,22 @@
 package springboot.web.controller;
 
-import java.text.DateFormat;
-import java.util.Date;
-
-import org.springframework.ui.Model;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class HelloController {
 
+	//返回 thymeleaf 页面
 	@RequestMapping("/hello")
-    public String hello(Model m) throws Exception {
-        m.addAttribute("now", DateFormat.getDateTimeInstance().format(new Date()));
-
+    public String hello() throws Exception {
+        
         return "hello";
+    }
+	
+	//返回 jsp 页面
+	@RequestMapping("/hellojsp")
+    public String hellojsp() throws Exception {
+        
+        return "jsp/hello";
     }
 }
